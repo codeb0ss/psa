@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PES Account Generator</title>
+</head>
+<body>
+    <h1>PES Account Generator</h1>
+    <button onclick="generateAccount()">Generate Account</button>
+    <div id="accountDetails"></div>
+
+    <script>
+        function generateAccount() {
+            // Read the accounts.txt file
+            fetch('accounts.txt')
+                .then(response => response.text())
+                .then(data => {
+                    // Split the data into an array of lines
+                    const lines = data.split('\n');
+
+                    // Generate a random index to select an account from the lines array
+                    const randomIndex = Math.floor(Math.random() * lines.length);
+
+                    // Get the randomly selected account
+                    const account = lines[randomIndex];
+
+                    // Split the account into username and password
+                    const [username, password] = account.split(':');
+
+                    // Display the account details on the webpage
+                    document.getElementById('accountDetails').innerHTML = `Username: ${username}<br>Password: ${password}`;
+                })
+                .catch(error => {
+                    console.error('Error reading accounts.txt:', error);
+                });
+        }
+    </script>
+</body>
+</html>
